@@ -24,10 +24,12 @@ function(add_generator_specific_packaging_test NAME GENERATOR)
 endfunction()
 
 function(add_packaging_test NAME)
-	add_generator_specific_packaging_test(${NAME} WIX)
+    add_generator_specific_packaging_test("${NAME}" WIX)
     add_generator_specific_packaging_test("${NAME}" NSIS)
 endfunction()
 
 add_custom_target(test_wrapper SOURCES test_wrapper.cmake)
 
 add_packaging_test(basic)
+add_packaging_test(space_in_path)
+add_packaging_test(umlaut_in_path)
