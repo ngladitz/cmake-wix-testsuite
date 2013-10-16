@@ -21,6 +21,8 @@ function(add_generator_specific_packaging_test NAME GENERATOR)
 		"-DGENERATOR=${GENERATOR}"
 		-P "${CMAKE_CURRENT_SOURCE_DIR}/test_wrapper.cmake"
 	)
+
+    add_custom_target("${NAME}-${GENERATOR}" SOURCES "${NAME}/CMakeLists.txt")
 endfunction()
 
 function(add_packaging_test NAME)
@@ -35,3 +37,4 @@ add_packaging_test(space_in_path)
 add_packaging_test(umlaut_in_path)
 add_packaging_test(wix_cultures)
 add_packaging_test(package_executables)
+add_packaging_test(components)
