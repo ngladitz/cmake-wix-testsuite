@@ -1,0 +1,33 @@
+cmake_minimum_required(VERSION 2.8.12)
+
+project(CMakeWiXTestsuite)
+
+enable_testing()
+
+set(REFERENCE_CMAKE_BIN_DIR "C:/Users/ngladitz/src/git/cmake-build/bin" 
+	CACHE PATH "bin directory of the cmake build being tested")
+
+function(add_generator_specific_packaging_test NAME GENERATOR)
+	set(TEST_BUILD_DIRECTORY 
+		"${CMAKE_CURRENT_BINARY_DIR}/${NAME}/${GENERATOR}")
+
+	add_test(NAME "${NAME}-${GENERATOR}" 
+		WORKING_DIRECTORY "${TEST_BUILD_DIRECTORY}"
+		COMMAND "${CMAKE_COMMAND}" 
+		"-DTEST_NAME=${NAME}-${GENERATOR}"
+		"-DCMAKE_BIN_DIR=${REFERENCE_CMAKE_BIN_DIR}"
+		"-DBIN_DIR=${TEST_BUILD_DIRECTORY}"
+		"-DSRC_DIR=${CMAKE_CURRENT_SOURCE_DIR}/${NAME}"
+		"-DGENERATOR=${GENERATOR}"
+		-P "${CMAKE_CURRENT_SOURCE_DIR}/test_wrapper.cmake"
+	)
+endfunction()
+
+function(add_packaging_test NAME)
+	add_generator_specific_packaging_test(${NAME} WIX)
+    add_generator_specific_packaging_test("${NAME}" NSIS)
+endfunction()
+
+add_custom_target(test_wrapper SOURCES test_wrapper.cmake)
+
+add_packaging_test(basic)
