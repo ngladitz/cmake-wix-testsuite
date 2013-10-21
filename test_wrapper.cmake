@@ -9,6 +9,7 @@ file(MAKE_DIRECTORY "${BIN_DIR}")
 
 execute_process(COMMAND "${FOREIGN_CMAKE_COMMAND}"
 	-G Ninja 
+    "-DCMAKE_PROJECT_NAME=${TEST_NAME}"
 	"-DCPACK_GENERATOR=${GENERATOR}" "${SRC_DIR}"
 	WORKING_DIRECTORY "${BIN_DIR}"
 	RESULT_VARIABLE CMAKE_RESULT
@@ -18,7 +19,7 @@ execute_process(COMMAND "${FOREIGN_CMAKE_COMMAND}"
 
 if(NOT "${CMAKE_RESULT}" STREQUAL "0")
 	message(FATAL_ERROR 
-		"[${TEST_NAME}] CMake failed (${CMAKE_RESULT}) : [${CMAKE_OUTPUT}]")
+        "[${TEST_NAME}-${GENERATOR}] CMake failed (${CMAKE_RESULT}) : [${CMAKE_OUTPUT}]")
 endif()
 
 execute_process(COMMAND "${FOREIGN_CMAKE_COMMAND}" --build .
@@ -30,7 +31,7 @@ execute_process(COMMAND "${FOREIGN_CMAKE_COMMAND}" --build .
 
 if(NOT "${CMAKE_RESULT}" STREQUAL "0")
     message(FATAL_ERROR
-        "[${TEST_NAME}] CMake failed (${CMAKE_RESULT}) : [${CMAKE_OUTPUT}]")
+        "[${TEST_NAME}-${GENERATOR}] CMake failed (${CMAKE_RESULT}) : [${CMAKE_OUTPUT}]")
 endif()
 
 execute_process(COMMAND "${FOREIGN_CPACK_COMMAND}"
@@ -42,5 +43,23 @@ execute_process(COMMAND "${FOREIGN_CPACK_COMMAND}"
 
 if(NOT "${CPACK_RESULT}" STREQUAL "0")
 	message(FATAL_ERROR 
-		"[${TEST_NAME}] CPack failed (${CPACK_RESULT}) : [${CPACK_OUTPUT}]")
+        "[${TEST_NAME}-${GENERATOR}] CPack failed (${CPACK_RESULT}) : [${CPACK_OUTPUT}]")
+endif()
+
+file(MAKE_DIRECTORY ${INSTALLER_DIR})
+file(GLOB INSTALLER "${TEST_NAME}*")
+
+get_filename_component(INSTALLER_FILENAME "${INSTALLER}" NAME)
+
+execute_process(COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+    "${INSTALLER}"
+    "${INSTALLER_DIR}/${INSTALLER_FILENAME}"
+    RESULT_VARIABLE COPY_RESULT
+    OUTPUT_VARIABLE COPY_OUTPUT
+    ERROR_VARIABLE COPY_OUTPUT
+)
+
+if(NOT "${COPY_RESULT}" STREQUAL "0")
+    message(FATAL_ERROR
+        "[${TEST_NAME}-${GENERATOR}] copy failed (${COPY_RESULT}) : [${COPY_OUTPUT}]")
 endif()
