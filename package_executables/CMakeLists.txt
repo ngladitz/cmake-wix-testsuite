@@ -1,8 +1,8 @@
-add_executable(hw hw.cpp)
-install(TARGETS hw DESTINATION bin)
+add_executable(h-w hw.cpp)
+install(TARGETS h-w DESTINATION bin)
 
 install(FILES hw.cpp DESTINATION src)
 
-set(CPACK_PACKAGE_EXECUTABLES "hw;Hello World")
+set(CPACK_PACKAGE_EXECUTABLES h-w "Hello World")
 
 include(CPack)
