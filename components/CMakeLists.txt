@@ -1,3 +1,7 @@
+cmake_minimum_required(VERSION 2.8.12)
+
+include(CPackComponent)
+
 add_library(mylib mylib.cpp)
 
 add_executable(mylibapp mylibapp.cpp)
@@ -6,28 +10,38 @@ target_link_libraries(mylibapp mylib)
 install(TARGETS mylib ARCHIVE DESTINATION lib COMPONENT libraries)
 install(TARGETS mylibapp RUNTIME DESTINATION bin COMPONENT applications)
 install(FILES mylib.h DESTINATION include COMPONENT headers)
+install(FILES free.txt DESTINATION doc)
 
-set(CPACK_COMPONENTS_ALL applications libraries headers)
+#set(CPACK_COMPONENTS_ALL applications libraries headers)
 
-set(CPACK_COMPONENT_APPLICATIONS_DISPLAY_NAME "MyLib Application")
-set(CPACK_COMPONENT_LIBRARIES_DISPLAY_NAME "Libraries")
-set(CPACK_COMPONENT_HEADERS_DISPLAY_NAME "C++ Headers")
+cpack_add_component(applications
+    DISPLAY_NAME "MyLib Application"
+    DESCRIPTION "An extremely useful application that makes use of MyLib"
+    GROUP "Runtime"
+)
 
-set(CPACK_COMPONENT_APPLICATIONS_DESCRIPTION 
-	"An extremely useful application that makes use of MyLib")
-set(CPACK_COMPONENT_LIBRARIES_DESCRIPTION
-	"Static libraries used to build programs with MyLib")
-set(CPACK_COMPONENT_HEADERS_DESCRIPTION
-	"C/C++ header files for use with MyLib")
+cpack_add_component(libraries
+    DISPLAY_NAME "Libraries"
+    DESCRIPTION "Static libraries used to build programs with MyLib"
+    HIDDEN
+    GROUP "Development"
+)
 
-set(CPACK_COMPONENT_HEADERS_DEPENDS libraries)
+cpack_add_component(headers
+    DISPLAY_NAME "C++ Headers"
+    DESCRIPTION "C/C++ header files for use with MyLib"
+    DEPENDS libraries
+    GROUP "Development"
+)
 
-set(CPACK_COMPONENT_APPLICATIONS_GROUP "Runtime")
-set(CPACK_COMPONENT_LIBRARIES_GROUP "Development")
-set(CPACK_COMPONENT_HEADERS_GROUP "Development")
+cpack_add_component_group(Runtime)
 
-set(CPACK_COMPONENT_GROUP_DEVELOPMENT_DESCRIPTION
-	"All of the tools you'll ever need to develop software")
+cpack_add_component_group(Development
+    DESCRIPTION "All of the tools you'll ever need to develop software"
+)
+
+set(CPACK_COMPONENT_GROUP_DEVELOPMENT_PARENT_GROUP "Runtime")
+#unset(CPACK_COMPONENT_APPLICATIONS_REQUIRED)
 
 set(CPACK_ALL_INSTALL_TYPES Full Developer)
 

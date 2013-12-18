@@ -11,7 +11,7 @@ function(add_generator_specific_packaging_test NAME GENERATOR)
 	set(TEST_BUILD_DIRECTORY 
 		"${CMAKE_CURRENT_BINARY_DIR}/${NAME}/${GENERATOR}")
 
-	add_test(NAME "${NAME}-${GENERATOR}" 
+    add_test(NAME "test-${NAME}-${GENERATOR}"
 		WORKING_DIRECTORY "${TEST_BUILD_DIRECTORY}"
 		COMMAND "${CMAKE_COMMAND}" 
         "-DTEST_NAME=${NAME}"
@@ -45,3 +45,5 @@ add_packaging_test(custom_template_by_variable)
 add_packaging_test(ui_bitmaps_and_icon)
 add_packaging_test(custom_program_menu_folder)
 add_packaging_test(wix_util_extension)
+add_packaging_test(fragment_injection)
+add_packaging_test(package_install_directory)
