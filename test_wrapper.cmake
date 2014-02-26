@@ -29,6 +29,8 @@ execute_process(COMMAND "${FOREIGN_CMAKE_COMMAND}" --build .
     ERROR_VARIABLE CMAKE_OUTPUT
 )
 
+file(WRITE ${BIN_DIR}/cmake.log "${CMAKE_OUTPUT}")
+
 if(NOT "${CMAKE_RESULT}" STREQUAL "0")
     message(FATAL_ERROR
         "[${TEST_NAME}-${GENERATOR}] CMake failed (${CMAKE_RESULT}) : [${CMAKE_OUTPUT}]")
@@ -41,13 +43,15 @@ execute_process(COMMAND "${FOREIGN_CPACK_COMMAND}"
 	ERROR_VARIABLE CPACK_OUTPUT
 )
 
+file(WRITE ${BIN_DIR}/cpack.log "${CPACK_OUTPUT}")
+
 if(NOT "${CPACK_RESULT}" STREQUAL "0")
 	message(FATAL_ERROR 
         "[${TEST_NAME}-${GENERATOR}] CPack failed (${CPACK_RESULT}) : [${CPACK_OUTPUT}]")
 endif()
 
 file(MAKE_DIRECTORY ${INSTALLER_DIR})
-file(GLOB INSTALLER "WiX-${TEST_NAME}*")
+file(GLOB INSTALLER "${BIN_DIR}/WiX-${TEST_NAME}*")
 
 get_filename_component(INSTALLER_FILENAME "${INSTALLER}" NAME)
 
