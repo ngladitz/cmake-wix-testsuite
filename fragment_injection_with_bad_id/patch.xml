@@ -1,0 +1,6 @@
+<CPackWiXPatch>
+	<CPackWiXFragment Id="BAD_ID">
+		<Environment Id="MyEnvironment" Action="set" 
+			Name="FOOBAR" Value="FooBar"/>
+	</CPackWiXFragment>
+</CPackWiXPatch>

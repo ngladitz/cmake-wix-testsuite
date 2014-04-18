@@ -10,7 +10,7 @@ file(MAKE_DIRECTORY "${BIN_DIR}")
 execute_process(COMMAND "${FOREIGN_CMAKE_COMMAND}"
 	-G Ninja 
     "-DCMAKE_PROJECT_NAME=WiX-${TEST_NAME}"
-	"-DCPACK_GENERATOR=${GENERATOR}" "${SRC_DIR}"
+    "-DCPACK_GENERATOR=WIX" "${SRC_DIR}"
 	WORKING_DIRECTORY "${BIN_DIR}"
 	RESULT_VARIABLE CMAKE_RESULT
 	OUTPUT_VARIABLE CMAKE_OUTPUT
@@ -19,7 +19,7 @@ execute_process(COMMAND "${FOREIGN_CMAKE_COMMAND}"
 
 if(NOT "${CMAKE_RESULT}" STREQUAL "0")
 	message(FATAL_ERROR 
-        "[${TEST_NAME}-${GENERATOR}] CMake failed (${CMAKE_RESULT}) : [${CMAKE_OUTPUT}]")
+        "[${TEST_NAME}] CMake failed (${CMAKE_RESULT}) : [${CMAKE_OUTPUT}]")
 endif()
 
 execute_process(COMMAND "${FOREIGN_CMAKE_COMMAND}" --build .
@@ -33,7 +33,7 @@ file(WRITE ${BIN_DIR}/cmake.log "${CMAKE_OUTPUT}")
 
 if(NOT "${CMAKE_RESULT}" STREQUAL "0")
     message(FATAL_ERROR
-        "[${TEST_NAME}-${GENERATOR}] CMake failed (${CMAKE_RESULT}) : [${CMAKE_OUTPUT}]")
+        "[${TEST_NAME}] CMake failed (${CMAKE_RESULT}) : [${CMAKE_OUTPUT}]")
 endif()
 
 execute_process(COMMAND "${FOREIGN_CPACK_COMMAND}"
@@ -47,7 +47,7 @@ file(WRITE ${BIN_DIR}/cpack.log "${CPACK_OUTPUT}")
 
 if(NOT "${CPACK_RESULT}" STREQUAL "0")
 	message(FATAL_ERROR 
-        "[${TEST_NAME}-${GENERATOR}] CPack failed (${CPACK_RESULT}) : [${CPACK_OUTPUT}]")
+        "[${TEST_NAME}] CPack failed (${CPACK_RESULT}) : [${CPACK_OUTPUT}]")
 endif()
 
 file(MAKE_DIRECTORY ${INSTALLER_DIR})
@@ -69,5 +69,5 @@ message("copy from [${INSTALLER}] to [${OUTPUT_INSTALLER}]")
 
 if(NOT "${COPY_RESULT}" STREQUAL "0")
     message(FATAL_ERROR
-        "[${TEST_NAME}-${GENERATOR}] copy failed (${COPY_RESULT}) : [${COPY_OUTPUT}]")
+        "[${TEST_NAME}] copy failed (${COPY_RESULT}) : [${COPY_OUTPUT}]")
 endif()

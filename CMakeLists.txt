@@ -7,28 +7,22 @@ enable_testing()
 set(REFERENCE_CMAKE_BIN_DIR "C:/Users/ngladitz/src/git/cmake-build/bin" 
 	CACHE PATH "bin directory of the cmake build being tested")
 
-function(add_generator_specific_packaging_test NAME GENERATOR)
-	set(TEST_BUILD_DIRECTORY 
-		"${CMAKE_CURRENT_BINARY_DIR}/${NAME}/${GENERATOR}")
-
-    add_test(NAME "test-${NAME}-${GENERATOR}"
-		WORKING_DIRECTORY "${TEST_BUILD_DIRECTORY}"
-		COMMAND "${CMAKE_COMMAND}" 
-        "-DTEST_NAME=${NAME}"
-		"-DCMAKE_BIN_DIR=${REFERENCE_CMAKE_BIN_DIR}"
-		"-DBIN_DIR=${TEST_BUILD_DIRECTORY}"
-		"-DSRC_DIR=${CMAKE_CURRENT_SOURCE_DIR}/${NAME}"
-        "-DGENERATOR=${GENERATOR}"
-        "-DINSTALLER_DIR=${CMAKE_CURRENT_BINARY_DIR}/installers"
-		-P "${CMAKE_CURRENT_SOURCE_DIR}/test_wrapper.cmake"
-	)
-
-    add_custom_target("${NAME}-${GENERATOR}" SOURCES "${NAME}/CMakeLists.txt")
-endfunction()
-
 function(add_packaging_test NAME)
-    add_generator_specific_packaging_test("${NAME}" WIX)
-    #add_generator_specific_packaging_test("${NAME}" NSIS)
+    set(TEST_BUILD_DIRECTORY
+        "${CMAKE_CURRENT_BINARY_DIR}/${NAME}")
+
+    add_test(NAME "${NAME}"
+        WORKING_DIRECTORY "${TEST_BUILD_DIRECTORY}"
+        COMMAND "${CMAKE_COMMAND}"
+        "-DTEST_NAME=${NAME}"
+        "-DCMAKE_BIN_DIR=${REFERENCE_CMAKE_BIN_DIR}"
+        "-DBIN_DIR=${TEST_BUILD_DIRECTORY}"
+        "-DSRC_DIR=${CMAKE_CURRENT_SOURCE_DIR}/${NAME}"
+        "-DINSTALLER_DIR=${CMAKE_CURRENT_BINARY_DIR}/installers"
+        -P "${CMAKE_CURRENT_SOURCE_DIR}/test_wrapper.cmake"
+    )
+
+    add_custom_target("${NAME}" SOURCES "${NAME}/CMakeLists.txt")
 endfunction()
 
 add_custom_target(test_wrapper SOURCES test_wrapper.cmake)
@@ -46,6 +40,13 @@ add_packaging_test(ui_bitmaps_and_icon)
 add_packaging_test(custom_program_menu_folder)
 add_packaging_test(wix_util_extension)
 add_packaging_test(fragment_injection)
+
+add_packaging_test(fragment_injection_with_bad_id)
+
+set_property(TEST fragment_injection_with_bad_id
+    PROPERTY PASS_REGULAR_EXPRESSION
+    "Some XML patch fragments did not have matching IDs")
+
 add_packaging_test(package_install_directory)
 add_packaging_test(read_only)
 add_packaging_test(rtf_writer_unicode)
