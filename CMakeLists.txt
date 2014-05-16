@@ -4,7 +4,7 @@ project(CMakeWiXTestsuite)
 
 enable_testing()
 
-set(REFERENCE_CMAKE_BIN_DIR "C:/Users/ngladitz/src/git/cmake-build/bin" 
+set(REFERENCE_CMAKE_BIN_DIR "$ENV{WIX_REFERENCE_CMAKE_BIN_DIR}"
 	CACHE PATH "bin directory of the cmake build being tested")
 
 function(add_packaging_test NAME)
@@ -53,3 +53,4 @@ add_packaging_test(rtf_writer_unicode)
 add_packaging_test(package_registry)
 add_packaging_test(package_registry2)
 add_packaging_test(desktop_shortcut)
+add_packaging_test(properties)
