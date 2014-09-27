@@ -8,6 +8,16 @@ install(FILES
     DESTINATION acl
 )
 
+install(
+    DIRECTORY
+        empty_directory_with_property
+        non_empty_directory_with_property
+        empty_directory
+        non_empty_directory
+    DESTINATION ./
+    PATTERN "ignore.me" EXCLUDE
+)
+
 set_property(INSTALL
   test1/never_overwrite.txt
   test3/permanent_and_never_overwrite.txt
@@ -33,6 +43,12 @@ set_property(INSTALL
 set_property(INSTALL
   acl/acl_mixed.txt
   PROPERTY CPACK_WIX_ACL "Everyone=GenericRead,Read,ReadPermission,Delete"
+)
+
+set_property(INSTALL
+    empty_directory_with_property
+    non_empty_directory_with_property
+    PROPERTY CPACK_WIX_ACL "Everyone=GenericRead,GenericWrite,CreateFile"
 )
 
 include(CPack)
