@@ -1,0 +1,5 @@
+<CPackWiXPatch>
+	<CPackWiXFragment Id="#PRODUCT">
+		<Icon Id="my_icon_id" SourceFile="@MY_ICON@"/>
+	</CPackWiXFragment>
+</CPackWiXPatch>
