@@ -2,5 +2,9 @@
 	<CPackWiXFragment Id="CM_CP_bin.hw.exe">
 		<Environment Id="MyEnvironment" Action="set" 
 			Name="FOOBAR" Value="FooBar"/>
+
+		<Environment Id="MyPath" Action="set" Part="first"
+			Name="PATH" Value="[INSTALL_ROOT]bin"
+			System="yes"/>
 	</CPackWiXFragment>
 </CPackWiXPatch>
