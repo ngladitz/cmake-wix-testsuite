@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+	<DirectoryRef Id="CM_DP_bin">
+		<Component Id="FooComponent" Guid="72850119-D23E-4886-A114-CC5778D849E2">
+			<RegistryValue Root="HKCU" Key="Software\CPackWIX\ExtraSources" 
+		                 Type="string" Name="Foo" Value="Foo" KeyPath="yes" />
+		</Component>
+	</DirectoryRef>
+    </Fragment>
+</Wix>

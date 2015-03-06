@@ -1,0 +1,7 @@
+<CPackWiXPatch>
+	<CPackWiXFragment Id="#PRODUCTFEATURE">
+		<ComponentRef Id="FooComponent"/>
+		<ComponentRef Id="BarComponent"/>
+		<ComponentRef Id="BazComponent"/>
+	</CPackWiXFragment>
+</CPackWiXPatch>

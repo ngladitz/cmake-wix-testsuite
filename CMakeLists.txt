@@ -60,3 +60,5 @@ add_packaging_test(product_fragment_injection)
 add_packaging_test(property_start_menu_shortcuts)
 add_packaging_test(property_desktop_shortcuts)
 add_packaging_test(property_startup_shortcuts)
+
+add_packaging_test(extra_sources)
