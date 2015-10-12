@@ -1,0 +1,13 @@
+<CPackWiXPatch>
+	<CPackWiXFragment Id="#PRODUCT">
+		<CustomAction Id="MyCustomAction"
+			ExeCommand="&quot;Hello World&quot;"
+			FileKey="CM_FP_bin.hw.exe"/>
+		<InstallExecuteSequence>
+			<Custom Action="MyCustomAction"
+				After="InstallFiles">
+				Installed 
+			</Custom>
+		</InstallExecuteSequence>
+	</CPackWiXFragment>
+</CPackWiXPatch>
