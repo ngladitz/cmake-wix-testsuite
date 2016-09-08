@@ -1,0 +1,9 @@
+<CPackWiXPatch>
+	<CPackWiXFragment Id="#PRODUCT">
+		<FeatureRef Id="ProductFeature" IgnoreParent="yes">
+			<Component Id="MyVeryOwnComponent" Guid="*" Directory="INSTALL_ROOT">
+				<RegistryValue Root="HKCU" Key="Software\Humanity\MyVeryOwnComponent" Name="MyInteger" Type="integer" Value="1" KeyPath="yes"/>
+			</Component>
+		</FeatureRef>
+	</CPackWiXFragment>
+</CPackWiXPatch>

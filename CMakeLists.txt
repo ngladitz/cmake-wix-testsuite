@@ -64,3 +64,4 @@ add_packaging_test(property_startup_shortcuts)
 add_packaging_test(extra_sources)
 
 add_packaging_test(custom_action_with_condition)
+add_packaging_test(feature_ref_in_product)
