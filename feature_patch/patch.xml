@@ -1,0 +1,19 @@
+<CPackWiXPatch>
+	<CPackWiXFragment Id="CM_G_MyGroup">
+		<Component Id="MyVeryOwnComponent1" Guid="*" Directory="INSTALL_ROOT">
+			<RegistryValue Root="HKCU" Key="Software\Humanity\feature_patch" Name="CM_G_MyGroup" Type="integer" Value="1" KeyPath="yes"/>
+		</Component>
+	</CPackWiXFragment>
+
+	<CPackWiXFragment Id="CM_C_my_component1">
+		<Component Id="MyVeryOwnComponent2" Guid="*" Directory="INSTALL_ROOT">
+			<RegistryValue Root="HKCU" Key="Software\Humanity\feature_patch" Name="CM_C_my_component1" Type="integer" Value="1" KeyPath="yes"/>
+		</Component>
+	</CPackWiXFragment>
+
+	<CPackWiXFragment Id="CM_C_my_component2">
+		<Component Id="MyVeryOwnComponent3" Guid="*" Directory="INSTALL_ROOT">
+			<RegistryValue Root="HKCU" Key="Software\Humanity\feature_patch" Name="CM_C_my_component2" Type="integer" Value="1" KeyPath="yes"/>
+		</Component>
+	</CPackWiXFragment>
+</CPackWiXPatch>
